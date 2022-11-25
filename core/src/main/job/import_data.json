@@ -1,0 +1,56 @@
+{
+    "job": {
+			"setting": {
+			  "speed": {
+				"channel": 2
+			  }
+			},
+			"content": [
+			{
+				"reader": {
+				  "name": "odpsreader",
+				  "parameter": {
+						"accessId": "xe42przgCl6PwJef",
+						"accessKey": "rNOah15oLgTuQRNv877uDZcbMJo3SL",
+						"project": "fxxjjfzjcyp_odps_dev",
+						"table": "jh_qy_jbxx_qsxx",
+						"splitMode": "record",
+						"odpsServer": "http://service.cn-hangzhou-zjzwy01-d01.odps.cloud.zj.gov.cn:80/api",
+						"tunnelServer": "http://dt.cn-hangzhou-zjzwy01-d01.odps.cloud.zj.gov.cn",
+						"column": [
+						"id",
+						"tyxydm",
+						"entname",
+						"liqmen",
+						"ligprincipal",
+						"s_ext_timestamp",
+						"cjsj",
+						"gxsj"
+					]
+				  }
+				},		
+				"writer": {
+				"name": "hdfswriter",
+				"parameter": {
+					"defaultFS": "hdfs://hadoop01:9000",
+					"fileType": "textfile",
+					"path": "/user/hive/warehouse/sjzl_ods.db/textfile_table",
+					"fileName": "hdfswriter",
+					"column": [
+						"id",
+						"tyxydm",
+						"entname",
+						"liqmen",
+						"ligprincipal",
+						"s_ext_timestamp",
+						"cjsj",
+						"gxsj"
+				],
+				"writeMode": "append",
+				"fieldDelimiter": ",",
+				"compress": "NONE"}
+				}
+			}
+		]
+	}
+}

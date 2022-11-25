@@ -53,4 +53,13 @@ public class Constant {
 	 * 默认读取二进制文件一次性读取的Byte数目: 1048576 Byte [1MB]
 	 */
 	public static final int DEFAULT_BLOCK_SIZE_IN_BYTE = 1048576;
+
+
+
+	/**
+	 * 行分隔默认-1 取消值
+	 */
+	public static final int LINES_NUMBER = -1;
+
+
 }

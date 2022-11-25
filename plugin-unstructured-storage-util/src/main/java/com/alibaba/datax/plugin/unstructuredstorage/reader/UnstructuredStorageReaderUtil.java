@@ -63,13 +63,68 @@ public class UnstructuredStorageReaderUtil {
 		return splitedResult;
 	}
 
-	public static String[] splitBufferedReader(CsvReader csvReader)
+	public static String[] splitBufferedReader(CsvReader csvReader,Integer number)
 			throws IOException {
 		String[] splitedResult = null;
-		if (csvReader.readRecord()) {
-			splitedResult = csvReader.getValues();
-		}
+
+		do {
+			if (csvReader.readRecord()) {
+				String[] mid = csvReader.getValues();
+
+				if(number != -1 && mid.length < number){
+					if(mid.length <= 0){splitedResult = mid;break;}
+					splitedResult = splitLinesNum(mid,splitedResult);
+					if(splitedResult.length < number){
+						continue;
+					}else {
+						break;
+					}
+				}else {
+					splitedResult = mid;
+					break;
+				}
+
+			}else {
+				break;
+			}
+		}while (true);
 		return splitedResult;
+	}
+
+
+	public static String[] splitLinesNum(String[] mid ,String[] splitedResult){
+
+		int splitret = 0;
+		String[] new_str ;
+		//方法 循环遍历 两个数组合并
+		if(splitedResult == null){
+			int arry = mid.length;
+			splitedResult = new String[0];
+			new_str = new String[arry];
+		}else {
+			splitret = splitedResult.length;
+			int arry = splitedResult.length + mid.length;
+			new_str = new String[arry-1];
+		}
+
+		for(int x=0;x<splitret;x++){
+			new_str[x] = splitedResult[x];
+		}
+		for(int y=0;y<mid.length;y++){
+			if(splitret == 0){
+				new_str[splitret+y]=mid[y];
+			}else {
+
+				if (y == 0) {
+					new_str[splitret - 1] = new_str[splitret - 1] + "\r\n" + mid[y];
+				} else {
+					new_str[splitret - 1 + y] = mid[y];
+				}
+			}
+
+		}
+		splitedResult = new_str;
+		return  splitedResult;
 	}
 
 	/**
@@ -259,6 +314,9 @@ public class UnstructuredStorageReaderUtil {
 				Constant.DEFAULT_SKIP_HEADER);
 		// warn: no default value '\N'
 		String nullFormat = readerSliceConfig.getString(Key.NULL_FORMAT);
+		Integer linesColumn = readerSliceConfig.getInt(Key.LINES_NUMBER,
+				Constant.LINES_NUMBER);
+
 
 		// warn: Configuration -> List<ColumnEntry> for performance
 		// List<Configuration> column = readerSliceConfig
@@ -282,7 +340,7 @@ public class UnstructuredStorageReaderUtil {
 
 			String[] parseRows;
 			while ((parseRows = UnstructuredStorageReaderUtil
-					.splitBufferedReader(csvReader)) != null) {
+					.splitBufferedReader(csvReader,linesColumn)) != null) {
 				UnstructuredStorageReaderUtil.transportOneRecord(recordSender,
 						column, parseRows, nullFormat, taskPluginCollector);
 			}

@@ -1,0 +1,47 @@
+{
+	  "job": {
+		      "setting": {
+			            "speed": {
+					            "channel": 2
+						          }
+							      },
+							          "content": [
+									        {
+											        "reader": {
+													          "name": "ftpreader",
+														            "parameter": {
+																                "protocol": "sftp",
+																		            "host": "172.16.0.30",
+																			                "port": 22,
+																					            "username": "dev",
+																						                "password": "Lips999+",
+																								            "encoding": "UTF-8",
+																									                "fieldDelimiter": "^",
+																											            "fileName": "jh_qy_qbb",
+																												                "suffix": ".csv",
+																														            "linesNumber": 17,
+																															                "path": [
+																																		              "/data/filesync/odps/jh_qy_qbb/"
+																																			                  ],
+																																					              "csvReaderConfig": {
+																																							                    "safetySwitch": false,
+																																									                  "skipEmptyRecords": false,
+																																											                "useTextQualifier": false
+																																													            },
+																																														                "column": [
+																																																	              "*"
+																																																		                  ]
+																																																				            }
+																																																					            },
+																																																						            "writer": {
+																																																								              "name": "streamwriter",
+																																																									                "parameter": {
+																																																												            "print": true
+																																																													              }
+																																																														              }
+																																																															            }
+																																																																        ]
+																																																																	  }
+}
+
+

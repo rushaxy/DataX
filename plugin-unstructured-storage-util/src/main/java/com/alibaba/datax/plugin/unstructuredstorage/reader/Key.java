@@ -87,4 +87,9 @@ public class Key {
 	public static final String TAR_FILE_FILTER_PATTERN = "tarFileFilterPattern";
 	public static final String ENABLE_INNER_SPLIT = "enableInnerSplit";
 
+
+	/**
+	 * 行分隔符 lines number
+	 */
+	public static final String LINES_NUMBER = "linesNumber";
 }

@@ -36,6 +36,9 @@ public class FtpReader extends Reader {
 
 		private FtpHelper ftpHelper = null;
 
+		private Integer linesNumber;
+
+
 		@Override
 		public void init() {
 			this.originConfig = this.getPluginJobConf();
@@ -98,7 +101,15 @@ public class FtpReader extends Reader {
 						throw DataXException.asDataXException(FtpReaderErrorCode.ILLEGAL_VALUE, message);
 					}
 				}	
-			}		
+			}
+
+
+			this.linesNumber = this.originConfig.getInt(com.alibaba.datax.plugin.unstructuredstorage.reader.Key.LINES_NUMBER,
+					com.alibaba.datax.plugin.unstructuredstorage.reader.Constant.LINES_NUMBER);
+			if(linesNumber != -1){
+				LOG.info(String.format("您设置了lines_number值: %s 将启用 ",linesNumber));
+			}
+
 
 		}
 
@@ -240,7 +251,7 @@ public class FtpReader extends Reader {
 				InputStream inputStream = null;
 				
 				inputStream = ftpHelper.getInputStream(fileName);
-	
+
 				UnstructuredStorageReaderUtil.readFromStream(inputStream, fileName, this.readerSliceConfig,
 						recordSender, this.getTaskPluginCollector());
 				recordSender.flush();
